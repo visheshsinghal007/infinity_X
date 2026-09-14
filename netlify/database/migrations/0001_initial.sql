@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS workspaces (owner TEXT PRIMARY KEY, body TEXT NOT NULL, revision INTEGER NOT NULL DEFAULT 0);
+CREATE TABLE IF NOT EXISTS demo_sessions (id TEXT PRIMARY KEY, owner TEXT NOT NULL, role TEXT NOT NULL, expires BIGINT NOT NULL);
+CREATE TABLE IF NOT EXISTS documents (id TEXT PRIMARY KEY, owner TEXT NOT NULL, name TEXT NOT NULL, mime TEXT NOT NULL, content TEXT NOT NULL);
+CREATE INDEX IF NOT EXISTS sessions_owner ON demo_sessions(owner);
+CREATE INDEX IF NOT EXISTS documents_owner ON documents(owner);
