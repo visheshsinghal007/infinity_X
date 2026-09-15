@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {seed,transition,ranking} from '../lib/model.ts';
 import {emptyChecks,demoChecks,summarize,evaluateCheck,extractClaims,validateChecks} from '../lib/compliance.mjs';
-import {complianceAction,complianceReport} from './compliance-api.mjs';
+import {complianceAction,complianceReport,parsePdf} from './compliance-api.mjs';
 import {suggestClaims} from './integrations.mjs';
 test('nine categories distinguish expiry, mismatch, uncertainty, exemptions and weighted scores',()=>{
  const c=demoChecks('Example');assert.equal(c.length,9);assert.equal(c.reduce((n,x)=>n+evaluateCheck(x).weight,0),100);
@@ -45,4 +45,10 @@ test('statutory review gates rankings and invalidates an earlier report',async()
  }
  assert.deepEqual(ranking(t).map(b=>b.id),[t.bids[0].id]);
  transition(s,'FINANCIAL_EVALUATOR','report',{id:t.id});assert.ok(t.reportAt);
+});
+test('PDF parser handles small in-memory files with page-grounded claims',async()=>{
+ const stream='BT /F1 14 Tf 40 750 Td (FICTIONAL SPECIMEN UDYAM-AA-01-1234567) Tj ET';
+ const objects=['<< /Type /Catalog /Pages 2 0 R >>','<< /Type /Pages /Kids [3 0 R] /Count 1 >>','<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 4 0 R >> >> /Contents 5 0 R >>','<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>',`<< /Length ${stream.length} >>\nstream\n${stream}\nendstream`];
+ let pdf='%PDF-1.4\n',offsets=[0];for(let i=0;i<objects.length;i++){offsets.push(Buffer.byteLength(pdf));pdf+=`${i+1} 0 obj\n${objects[i]}\nendobj\n`}const xref=Buffer.byteLength(pdf);pdf+='xref\n0 6\n0000000000 65535 f \n'+offsets.slice(1).map(n=>String(n).padStart(10,'0')+' 00000 n \n').join('')+`trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF`;
+ const result=await parsePdf(Buffer.from(pdf));assert.equal(result.pages.length,1);assert.equal(result.claims[0].value,'UDYAM-AA-01-1234567');assert.equal(result.claims[0].page,1);
 });

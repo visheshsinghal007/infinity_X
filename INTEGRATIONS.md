@@ -25,4 +25,4 @@ The UI shows whether the adapter is configured. An officer must explicitly conse
 
 Tesseract.js performs English OCR in the browser. Scanned PDFs are rendered with PDF.js. First use downloads engine/language assets from public CDNs; document images remain in browser processing. The extracted text and the original document are saved to the app database when the user uses the extraction workflow. OCR output is unverified and can contain errors. Limit: ten scanned pages and 3 MB. Text PDFs use pdf-parse on the server, at most twenty pages. Split longer documents to avoid unnoticed omissions. The app displays the processed pages.
 
-Technical references: [pdf-parse](https://github.com/greenforceai/pdf-parse/blob/main/README.md), [Tesseract.js API](https://github.com/naptha/tesseract.js/blob/master/docs/api.md).
+Technical references: [pdf-parse](https://github.com/mehmet-kozan/pdf-parse/blob/main/README.md), [Tesseract.js API](https://github.com/naptha/tesseract.js/blob/master/docs/api.md).
