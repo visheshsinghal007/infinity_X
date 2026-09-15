@@ -1,4 +1,6 @@
-# GovBid AI — Procurement Evaluation Workspace
+# Epsilon X — Integrated Bid Compliance & Procurement Workspace
+
+Version 2 aligns the app with the Infinity-X presentation. Start with JUDGES-WALKTHROUGH.md, PRESENTATION-COVERAGE.md and INTEGRATIONS.md.
 
 A working judges' demonstration of government procurement: tender creation, document uploads, verified requirements, sealed bid submission, technical review, financial ranking, risk review, committee recommendation and human approval.
 
@@ -7,7 +9,7 @@ A working judges' demonstration of government procurement: tender creation, docu
 Requires Node.js 24 or later.
 
 1. Extract the ZIP.
-2. Double-click `Start-GovBid.cmd`, or run `node server/local.mjs`. The ZIP includes the built website; no package installation is needed to run it.
+2. Run `npm install` once (internet required), then double-click `Start-Epsilon-X.cmd`, or run `node server/local.mjs`. The ZIP includes the built website.
 3. Open http://127.0.0.1:4173.
 
 To rebuild from source, run `npm install` and `npm run build` first.
@@ -45,7 +47,7 @@ The application includes a PWA manifest. In Chrome or Edge, open the hosted HTTP
 ## Scope and boundaries
 
 - Real: saved database records, CSV/JSON import, uploaded file preservation and SHA-256 hashes, role checks, deadline locks, deterministic evaluations, human overrides, report exports and audit records.
-- Simulated: government roles and seeded evidence. AI extraction is a fictional fallback; there is no live LLM, OCR, malware scanner, digital signature, external procurement integration or automatic contract award.
+- Simulated: government roles and seeded evidence. The legacy tender-requirement extractor uses a fictional fallback. Compliance Verification performs actual PDF text extraction, English OCR and pattern extraction. An optional LLM adapter is included but unconfigured. There is no malware scanner, signature authentication, live government registry integration or automatic contract award.
 - Scores use fixed-point integer paise for monetary amounts and deterministic comparisons. QCBS uses numeric ratios with two-decimal display rounding.
 - Role switching is deliberately available for the judges. This is not production access control for sensitive government operations. Do not expose confidential procurement information in a public demo.
 - Public visitors cannot read another browser's records. Uploaded files are stored in the database and served as attachments after workspace ownership checks (3 MB per file).
@@ -54,4 +56,4 @@ The application includes a PWA manifest. In Chrome or Edge, open the hosted HTTP
 
 ## Validation
 
-`npm test` covers seed integrity, the entire lifecycle, late submissions, incomplete reviews, unauthorized approvals, deterministic ranking, persistence, workspace isolation, import validation and upload ownership.
+`npm test` covers nine-category scoring, expiry/mismatches, exemptions, human compliance decisions, source-grounded AI suggestion filtering, and seed integrity, the entire lifecycle, late submissions, incomplete reviews, unauthorized approvals, deterministic ranking, persistence, workspace isolation, import validation and upload ownership.

@@ -1,0 +1,12 @@
+FICTIONAL TRAINING SPECIMEN - NOT A GOVERNMENT RECORD
+Epsilon X / Infinity-X judges demonstration
+
+Example company: Fictional Example Ltd
+Illustrative Udyam identifier: UDYAM-AA-01-1234567
+Illustrative PAN pattern: ABCDE1234F
+Illustrative GST pattern: 07ABCDE1234F1Z5
+Illustrative Startup identifier: DIPP123456
+
+These values are synthetic pattern-extraction examples. They are not evidence
+of registration, validity, tax compliance, startup status, or eligibility.
+Compare with independent evidence and require an officer review.
